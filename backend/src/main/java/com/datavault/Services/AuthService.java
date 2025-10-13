@@ -23,12 +23,10 @@ public class AuthService {
     
     @Transactional
     public AuthResponse register(RegisterRequest request) {
-        // Check if user exists
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
         
-        // Create user
         User user = new User();
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
@@ -38,7 +36,6 @@ public class AuthService {
         
         user = userRepository.save(user);
         
-        // Generate JWT token
         String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail());
         
         return AuthResponse.builder()
@@ -50,16 +47,13 @@ public class AuthService {
     }
     
     public AuthResponse login(LoginRequest request) {
-        // Find user
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
         
-        // Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new RuntimeException("Invalid credentials");
         }
         
-        // Generate token
         String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail());
         
         return AuthResponse.builder()

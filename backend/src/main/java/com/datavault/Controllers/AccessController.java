@@ -20,11 +20,6 @@ public class AccessController {
         return accessRepo.save(request);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<AccessRequest> getUserRequests(@PathVariable UUID userId) {
-        return accessRepo.findByUserId(userId);
-    }
-
     @PostMapping("/{id}/approve")
     public AccessRequest approveAccess(@PathVariable UUID id) {
         AccessRequest request = accessRepo.findById(id).orElseThrow();
