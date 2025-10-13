@@ -1,0 +1,31 @@
+# General
+.DS_Store
+*.log
+.env
+.env.local
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# Build outputs
+build/
+dist/
+target/
+*.jar
+!gradle-wrapper.jar
+
+# Dependencies
+node_modules/
+.pub-cache/
+
+# OS
+Thumbs.db
+EOF
+
+#Docker
+docker-compose.yml
+Dockerfile
+docker-compose.override.yml
