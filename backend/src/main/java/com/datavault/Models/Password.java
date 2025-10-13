@@ -32,7 +32,7 @@ public class Password {
     private String username;
     
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String encryptedPassword;  // Encrypted by client!
+    private String encryptedPassword;
     
     @Column(columnDefinition = "TEXT")
     private String websiteUrl;
@@ -43,4 +43,6 @@ public class Password {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
     private LocalDateTime lastUsedAt;
+
+
 }
