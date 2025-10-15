@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_flutter/services/encryption_service.dart';
+import 'package:mobile_flutter/screens/password.dart';
 import 'login.dart';
 
 class VaultScreen extends StatefulWidget {
@@ -38,9 +39,8 @@ class _VaultScreenState extends State<VaultScreen> {
 
       if (_encryption == null) {
         final masterPassword = await _storage.read(key: 'master_password');
-
         if (masterPassword != null) {
-            _encryption = await EncryptionService.init(masterPassword);
+          _encryption = await EncryptionService.init(masterPassword);
         }
       }
 
@@ -48,6 +48,7 @@ class _VaultScreenState extends State<VaultScreen> {
         _passwords = data.map((p) {
           return {
             'service': p['serviceName'],
+            'websiteUrl': p['websiteUrl'], // ✅ fixed here
             'username': p['username'],
             'password': _encryption?.decryptText(p['encryptedPassword']) ?? '***',
           };
@@ -75,6 +76,19 @@ class _VaultScreenState extends State<VaultScreen> {
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout)),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AddPasswordScreen()),
+          );
+          if (result == true) {
+            _loadPasswords();
+          }
+        },
+        child: const Icon(Icons.add),
+      ),
+
       body: _passwords.isEmpty
           ? const Center(child: Text("No passwords found."))
           : ListView.builder(
@@ -83,7 +97,14 @@ class _VaultScreenState extends State<VaultScreen> {
                 final item = _passwords[index];
                 return ListTile(
                   title: Text(item['service'] ?? ''),
-                  subtitle: Text("User: ${item['username']}"),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (item['websiteUrl'] != null && item['websiteUrl'].isNotEmpty)
+                        Text("🌐 ${item['websiteUrl']}"),
+                      Text("👤 ${item['username']}"),
+                    ],
+                  ),
                   trailing: Text(item['password'] ?? ''),
                 );
               },
