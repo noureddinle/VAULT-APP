@@ -22,7 +22,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
 
   bool _isLoading = false;
   EncryptionService? _encryption;
-  final String baseUrl = "http://localhost:8080/api";
+  final String baseUrl = "http://localhost:9090/api";
 
   Future<void> _savePassword() async {
     if (!_formKey.currentState!.validate()) return;

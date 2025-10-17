@@ -33,14 +33,16 @@ public class AuthService {
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setPublicKey(request.getPublicKey());
         user.setEncryptedMasterKey(request.getEncryptedMasterKey());
+        user.setRole("USER");
         
         user = userRepository.save(user);
         
-        String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail());
+        String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail(), user.getRole());
         
         return AuthResponse.builder()
                 .token(token)
                 .userId(user.getId())
+                .role(user.getRole())
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .build();
@@ -54,11 +56,12 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
         
-        String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail());
+        String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail(), user.getRole());
         
         return AuthResponse.builder()
                 .token(token)
                 .userId(user.getId())
+                .role(user.getRole())
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .encryptedMasterKey(user.getEncryptedMasterKey())

@@ -10,6 +10,7 @@ import lombok.Data;
 public class AuthResponse {
     private String token;
     private UUID userId;
+    private String role;
     private String email;
     private String fullName;
     private String encryptedMasterKey;

@@ -41,14 +41,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.black,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               const Text(
-                "🧭 Create Your Vault",
+                "Create Your Vault",
                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 30),
@@ -59,6 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: "Email"),
+                
               ),
               TextField(
                 controller: _passwordController,

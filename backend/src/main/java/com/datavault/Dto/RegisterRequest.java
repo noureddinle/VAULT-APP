@@ -17,6 +17,8 @@ public class RegisterRequest {
     private String password;
     
     private String fullName;
+
+    private String role;
     
     @NotBlank(message = "Public key is required")
     private String publicKey;

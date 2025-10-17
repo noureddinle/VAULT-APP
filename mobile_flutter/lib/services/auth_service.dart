@@ -11,8 +11,9 @@ class AuthService {
         iOptions: const IOSOptions(),
         aOptions: const AndroidOptions(encryptedSharedPreferences: true),
         wOptions: const WindowsOptions(),
+        lOptions: const LinuxOptions(),
     );
-    final String baseUrl = "http://localhost:8080/api/auth";
+    final String baseUrl = "http://localhost:9090/api/auth";
     final _crypto = CryptoService();
 
     Future<bool> register(String email, String fullName, String password) async {

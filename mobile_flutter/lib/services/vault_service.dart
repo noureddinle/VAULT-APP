@@ -5,7 +5,7 @@ import 'package:mobile_flutter/services/encryption_service.dart';
 
 class VaultService {
   static const _storage = FlutterSecureStorage();
-  final String baseUrl = "http://localhost:8080/api/passwords";
+  final String baseUrl = "http://localhost:9090/api/passwords";
   late final EncryptionService _encryption;
 
   VaultService._(this._encryption);

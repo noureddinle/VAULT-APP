@@ -21,6 +21,9 @@ public class User {
     private String passwordHash;
     
     private String fullName;
+
+    @Column(nullable=false)
+    private String role = "USER";
     
     @Column(columnDefinition = "TEXT")
     private String publicKey;
